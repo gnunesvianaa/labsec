@@ -1,9 +1,7 @@
 #include "implement_repeating_key_xor.hpp"
 
-// implementacao do xor com chave reptida
 string implement_repeating_key_xor(string text, string key)
 {
-    // conversap dos caracteres
     int count_key = 0;
     for (char &c : text)
     {
@@ -14,13 +12,13 @@ string implement_repeating_key_xor(string text, string key)
         }
     }
 
+    // convert to hex
     stringstream hex;
     
     for (char c : text) {
         hex << std::hex << setw(2) << std::setfill('0') << static_cast<int>(c);
     }
 
-    // Convert the stringstream to a string and return
     return hex.str();
 
 }
