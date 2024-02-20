@@ -1,12 +1,13 @@
 #ifndef CONVERT_HEX_TO_BASE64_HPP
 #define CONVERT_HEX_TO_BASE64_HPP
 
+#include <string>
+#include <bitset>
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <string>
 #include <map>
-#include <bitset>
+#include "../utils/hex_to_binary.hpp"
 
 using namespace std;
 

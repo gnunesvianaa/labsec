@@ -2,7 +2,7 @@
 
 int main()
 {
-    cout << "===== Welcome to solutions for Cryptopal Challenges =====" << endl;
+    cout << "===== Welcome to Solutions for Cryptopal Challenges =====" << endl;
     cout << endl;
 
     bool running = true;

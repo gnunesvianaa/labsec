@@ -19,7 +19,7 @@ The Cryptopal Challenges provide a structured way to learn practical cryptograph
 
 **Running**
 
-2. `make run` - Executes the solutions (assumes build was successful).
+2. `./output` - Executes the solutions (assumes build was successful).
 
 **Cleaning**
 
