@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <bitset>
 using namespace std;
 
 string ex06();

@@ -2,7 +2,7 @@
 
 string ex04()
 {
-    std::ifstream arquivo("/Users/gustavonunesviana/Desktop/preDesafioLabsec/ex04/strings.txt");
+    std::ifstream arquivo("ex04/strings.txt");
 
     if (!arquivo.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;

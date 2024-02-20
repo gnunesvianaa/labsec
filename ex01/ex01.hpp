@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <bitset>
+
 using namespace std;
 
 string ex01(string hex);

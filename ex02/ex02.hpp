@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <bitset>
 using namespace std;
 
 string ex02(string hex1, string hex2);

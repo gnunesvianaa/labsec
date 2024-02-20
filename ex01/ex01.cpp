@@ -19,7 +19,7 @@ string ex01(string hex)
         }
     }
 
-    // torno binary multiplo de 6
+    // tor no binary multiplo de 6
     while ((binary.size() % 6) != 0)
     {
         binary = '0' + binary;

@@ -3,7 +3,7 @@
 string ex06()
 {
     // it's been base64'd after being encrypted with repeating-key XOR.
-    string texto = decodeBase64File("/Users/gustavonunesviana/Desktop/preDesafioLabsec/ex06/encripted64.txt");
+    string texto = decodeBase64File("ex06/encripted64.txt");
 
     int keysize{};
     float best_score{};
