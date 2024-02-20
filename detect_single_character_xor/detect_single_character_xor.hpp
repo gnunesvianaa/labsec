@@ -9,10 +9,10 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include "../single_byte_xor_cipher/single_byte_xor_cipher.hpp"
 using namespace std;
 
 string detect_single_character_xor(string file_path);
-string compareDecripteds(vector<string> texts);
-string decifradorXor(string encripted_hex);
+string compare_texts(vector<string> texts);
 
 #endif
