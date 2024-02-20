@@ -1,5 +1,5 @@
-#ifndef EX05
-#define EX05
+#ifndef SINGLE_BYTE_XOR_CHARACTER_HPP
+#define EX03
 
 #include <iostream>
 #include <vector>
@@ -8,9 +8,8 @@
 #include <map>
 #include <sstream>
 #include <iomanip>
-#include <fstream>
 using namespace std;
 
-string ex05(string text, string key);
+string single_byte_xor_cipher(string encripted_hex);
 
 #endif

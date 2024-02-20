@@ -1,7 +1,7 @@
-#include "ex05.hpp"
+#include "implement_repeating_key_xor.hpp"
 
 // implementacao do xor com chave reptida
-string ex05(string text, string key)
+string implement_repeating_key_xor(string text, string key)
 {
     // conversap dos caracteres
     int count_key = 0;

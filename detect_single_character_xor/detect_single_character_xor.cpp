@@ -1,8 +1,8 @@
-#include "ex04.hpp"
+#include "detect_single_character_xor.hpp"
 
-string ex04()
+string detect_single_character_xor(string file_path)
 {
-    std::ifstream arquivo("ex04/strings.txt");
+    std::ifstream arquivo(file_path);
 
     if (!arquivo.is_open()) {
         cerr << "Erro ao abrir o arquivo!" << endl;

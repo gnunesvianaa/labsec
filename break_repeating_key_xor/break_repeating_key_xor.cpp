@@ -1,6 +1,6 @@
-#include "ex06.hpp"
+#include "break_repeating_key_xor.hpp"
 
-string ex06()
+string break_repeating_key_xor()
 {
     // it's been base64'd after being encrypted with repeating-key XOR.
     string texto = decodeBase64File("ex06/encripted64.txt");

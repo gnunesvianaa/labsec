@@ -1,7 +1,7 @@
-#include "ex01.hpp"
+#include "convert_hex_to_base64.hpp"
 
 // transformacao de hexadecimal para base 64
-string ex01(string hex)
+string convert_hex_to_base64(string hex)
 {
     // hex to binary
     string binary{};

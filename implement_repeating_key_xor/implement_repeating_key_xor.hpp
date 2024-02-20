@@ -1,5 +1,5 @@
-#ifndef EX04
-#define EX04
+#ifndef IMPLEMENT_REAPTING_KEY_XOR_HPP
+#define IMPLEMENT_REAPTING_KEY_XOR_HPP
 
 #include <iostream>
 #include <vector>
@@ -11,8 +11,6 @@
 #include <fstream>
 using namespace std;
 
-string ex04();
-string compareDecripteds(vector<string> texts);
-string decifradorXor(string encripted_hex);
+string implement_repeating_key_xor(string text, string key);
 
 #endif

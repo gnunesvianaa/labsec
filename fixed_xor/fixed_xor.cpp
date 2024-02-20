@@ -1,7 +1,7 @@
-#include "ex02.hpp"
+#include "fixed_xor.hpp"
 
 // implementacao do XOR bit a bit 
-string ex02(string hex1, string hex2)
+string fixed_xor(string hex1, string hex2)
 {
     // hex to binary
     string binary1{};

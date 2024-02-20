@@ -1,7 +1,7 @@
-#include "ex03.hpp"
+#include "single_byte_xor_cipher.hpp"
 
 // implementacao do xor cipher
-string ex03(string encripted_hex)
+string single_byte_xor_cipher(string encripted_hex)
 {
     // checar formatacao byte
     if (((encripted_hex.size()) % 2) != 0)

@@ -1,15 +1,14 @@
-#ifndef EX03
-#define EX03
+#ifndef FIXED_XOR_HPP
+#define FIXED_XOR_HPP
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <string>
 #include <map>
-#include <sstream>
-#include <iomanip>
+#include <bitset>
 using namespace std;
 
-string ex03(string encripted_hex);
+string fixed_xor(string hex1, string hex2);
 
 #endif
