@@ -1,12 +1,11 @@
 #include "detect_single_character_xor.hpp"
 
-string detect_single_character_xor(string file_path)
-{
-    // extracting each line
+string detect_single_character_xor(string file_path) {
+    // extracting file
     ifstream file(file_path);
 
     if (!file.is_open()) {
-        return "is was not possible to open the file";
+        cerr << "is was not possible to open the file" << endl;
     }
 
     vector<string> lines_encrypted;
@@ -14,6 +13,8 @@ string detect_single_character_xor(string file_path)
     while (getline(file, line)) {
         lines_encrypted.push_back(line);
     }
+
+    file.close();
     
     // deciphering each line
     vector<string> lines_decripted;
@@ -24,7 +25,6 @@ string detect_single_character_xor(string file_path)
     // comparing decripted lines
     string saida = compare_texts(lines_decripted);
 
-    file.close();
 
     return saida;  
 }

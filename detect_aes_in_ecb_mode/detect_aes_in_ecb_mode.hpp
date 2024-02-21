@@ -10,6 +10,9 @@
 #include <iomanip>
 #include <fstream>
 #include <bitset>
+#include <unordered_set>
+#include "../utils/file_to_string.hpp"
+#include "../utils/hex_to_bytes.hpp"
 
 using namespace std;
 
