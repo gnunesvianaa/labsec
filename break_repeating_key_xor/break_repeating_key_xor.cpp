@@ -1,12 +1,12 @@
 #include "break_repeating_key_xor.hpp"
 
-string break_repeating_key_xor(string file_path)
-{   
-    vector<unsigned char> byte_vector = convert_base64_file_to_bytes(file_path);
+string break_repeating_key_xor(string file_path) {
+    string text = file_to_string(file_path);
+    vector<unsigned char> byte_vector = base64_to_bytes(text);
 
-    int min_edit_distance;
+    // find best keysize
     int best_keysize;
-
+    int min_edit_distance;
     for (size_t KEYSIZE{2}; KEYSIZE <= 40; KEYSIZE++) {
         vector<unsigned char> sample_1(byte_vector.begin(), byte_vector.begin() + (KEYSIZE*50));
         vector<unsigned char> sample_2(byte_vector.begin() + (KEYSIZE * 50), byte_vector.begin() + 100 * KEYSIZE);
@@ -24,6 +24,7 @@ string break_repeating_key_xor(string file_path)
         }
     }
 
+    // break cipher text in of length of the best keysize
     vector<vector<unsigned char>> blocks;
     int block_size = best_keysize;
 
@@ -34,6 +35,7 @@ string break_repeating_key_xor(string file_path)
         blocks.push_back(block);
     }
 
+    // transposing blocks
     vector<vector<unsigned char>> transposed_blocks;
     for (int i = 0; i < block_size; ++i) {
         vector<unsigned char> transposed_block;
@@ -43,6 +45,7 @@ string break_repeating_key_xor(string file_path)
         transposed_blocks.push_back(transposed_block);
     }
 
+    // finding the key
     vector<unsigned char> key(block_size);
 
     for (int i = 0; i < block_size; ++i) {
@@ -55,6 +58,7 @@ string break_repeating_key_xor(string file_path)
         }
     }
 
+    // returning deciphered text
     string output;
     for (const auto& block : blocks) {
         output.append(block.begin(), block.end());
@@ -63,28 +67,14 @@ string break_repeating_key_xor(string file_path)
     return output;
 }
 
-vector<unsigned char> convert_base64_file_to_bytes(const std::string& file_path) {
-    // extracting file
-    std::ifstream file(file_path);
-    if (!file.is_open()) {
-        std::cerr << "error: could not open file '" << file_path << "'" << std::endl;
-        return {}; // Return an empty vector on error
-    }
-
-    std::string text_64, line;
-    while (std::getline(file, line)) {
-        text_64 += line;
-    }
-    file.close();
-
-    // base64 to bytes
+vector<unsigned char> base64_to_bytes(string text) {
     static const std::string base64_chars = 
              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     std::vector<unsigned char> decoded_bytes;
 
     int val = 0, valb = -8;
-    for (char c : text_64) {
+    for (char c : text) {
         if (c == '=') break; 
         val = (val << 6) + base64_chars.find(c);
         valb += 6;
@@ -119,14 +109,4 @@ int hamming_distance(const std::vector<unsigned char>& string_byte_1, const std:
   }
 
   return distance;
-}
-
-vector<unsigned char> string_to_byte_vector(const std::string& str) {
-    std::vector<unsigned char> byte_vector;
-
-    for (char c : str) {
-        byte_vector.push_back(static_cast<unsigned char>(c));
-    }
-
-    return byte_vector;
 }

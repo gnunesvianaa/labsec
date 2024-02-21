@@ -95,10 +95,13 @@ int main()
             case 7: {
                 cout << "Challenge: AES in ECB mode" << endl;
 
-                string input = "";
-                cout << "Input: " << input << endl;
+                string input_1 = "aes_in_ecb_mode/encoded_base64.txt";
+                cout << "Input 1: " << input_1 << endl;
 
-                string output  = "";
+                string input_2 = "YELLOW SUBMARINE";
+                cout << "Input 2: " << input_2 << endl;
+
+                string output  = aes_in_ecb_mode(input_1, input_2);
                 cout << "Output: " << output << endl;
                 cout << endl;
 
@@ -107,10 +110,10 @@ int main()
             case 8: {
                 cout << "Challenge: Detect AES in ECB mode" << endl;
 
-                string input = "";
+                string input = "detect_aes_in_ecb_mode/encoded_hex.txt";
                 cout << "Input: " << input << endl;
 
-                string output  = "";
+                string output = detect_aes_in_ecb_mode(input);
                 cout << "Output: " << output << endl;
                 cout << endl;
                 

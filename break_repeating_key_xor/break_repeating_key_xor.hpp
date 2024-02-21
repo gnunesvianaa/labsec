@@ -11,12 +11,12 @@
 #include <fstream>
 #include <bitset>
 #include "../single_byte_xor_cipher/single_byte_xor_cipher.hpp"
+#include "../utils/file_to_string.hpp"
 
 using namespace std;
 
 string break_repeating_key_xor(string file_path);
-vector<unsigned  char> convert_base64_file_to_bytes(const string& file_path);
-vector<unsigned  char> string_to_byte_vector(const std::string& str);
+vector<unsigned  char> base64_to_bytes(string text);
 int hamming_distance(const std::vector<unsigned char>& string_byte_1, const std::vector<unsigned char>& string_byte_2);
 
 #endif
