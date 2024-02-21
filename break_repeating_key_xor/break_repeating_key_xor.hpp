@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <fstream>
 #include <bitset>
+#include "../single_byte_xor_cipher/single_byte_xor_cipher.hpp"
 
 using namespace std;
 

@@ -7,7 +7,6 @@ int main()
 
     bool running = true;
     while (running){
-        //$$$$$$$$$$$$$$$$$$$$$$$$$$4444
         int choice;
         cout << "Enter the number of the chosen challenge (0 for quit): ";
         cin >> choice;
@@ -90,8 +89,7 @@ int main()
                 string output  = break_repeating_key_xor(input);
                 cout << "Output: " << output << endl;
                 cout << endl;
-                //$$$$$$$$$$$$$$$$$$
-                running = false;
+
                 break;
             }
             case 7: {

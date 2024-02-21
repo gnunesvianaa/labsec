@@ -8,8 +8,8 @@ string break_repeating_key_xor(string file_path)
     int best_keysize;
 
     for (size_t KEYSIZE{2}; KEYSIZE <= 40; KEYSIZE++) {
-        vector<unsigned char> sample_1(byte_vector.begin(), byte_vector.begin() + KEYSIZE);
-        vector<unsigned char> sample_2(byte_vector.begin() + KEYSIZE, byte_vector.begin() + 2 * KEYSIZE);
+        vector<unsigned char> sample_1(byte_vector.begin(), byte_vector.begin() + (KEYSIZE*50));
+        vector<unsigned char> sample_2(byte_vector.begin() + (KEYSIZE * 50), byte_vector.begin() + 100 * KEYSIZE);
 
         int edit_distance = hamming_distance(sample_1, sample_2)/KEYSIZE;
 
@@ -43,9 +43,24 @@ string break_repeating_key_xor(string file_path)
         transposed_blocks.push_back(transposed_block);
     }
 
-    cout << transposed_blocks.size() << endl;
+    vector<unsigned char> key(block_size);
 
-    return "output";
+    for (int i = 0; i < block_size; ++i) {
+        key[i] = (unsigned char)find_key(transposed_blocks[i]);
+    }
+
+    for (auto& block : blocks) {
+        for (int i = 0; i < block.size(); ++i) {
+            block[i] ^= key[i % block_size];
+        }
+    }
+
+    string output;
+    for (const auto& block : blocks) {
+        output.append(block.begin(), block.end());
+    }
+
+    return output;
 }
 
 vector<unsigned char> convert_base64_file_to_bytes(const std::string& file_path) {
