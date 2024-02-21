@@ -1,104 +1,117 @@
 #include "break_repeating_key_xor.hpp"
 
-string break_repeating_key_xor()
-{
-    // it's been base64'd after being encrypted with repeating-key XOR.
-    string texto = decodeBase64File("ex06/encripted64.txt");
+string break_repeating_key_xor(string file_path)
+{   
+    vector<unsigned char> byte_vector = convert_base64_file_to_bytes(file_path);
 
-    int keysize{};
-    float best_score{};
-    // achar o KEYSIZE ft
-    // for (size_t key_length{2}; key_length <= 40; key_length++)
-    // {
-    //     //pegar quatro amostras
-    //     string amostra1 = texto.substr(0, key_length);
-    //     string amostra2 = texto.substr(key_length, key_length);
-    //     // tdodas as combinacoes entre as qutatro dois a dois 
+    int min_edit_distance;
+    int best_keysize;
 
-    //     float score = hammingDistance(amostra1, amostra2) / key_length;
+    for (size_t KEYSIZE{2}; KEYSIZE <= 40; KEYSIZE++) {
+        vector<unsigned char> sample_1(byte_vector.begin(), byte_vector.begin() + KEYSIZE);
+        vector<unsigned char> sample_2(byte_vector.begin() + KEYSIZE, byte_vector.begin() + 2 * KEYSIZE);
 
-    //     if (score > best_score)
-    //     {
-    //         best_score = score;
-    //         keysize = key_length;
-    //     }
-    // }
-    // cout << keysize << endl;
-    //ex2 bytes xor
-    //mesma coisa do ex tres
-    //reapting key ex05
-    return "terminando";
+        int edit_distance = hamming_distance(sample_1, sample_2)/KEYSIZE;
+
+        if (KEYSIZE == 2){
+            min_edit_distance = edit_distance;
+            best_keysize = 2;
+            continue;
+        }
+        if (edit_distance < min_edit_distance){
+            min_edit_distance = edit_distance;
+            best_keysize = KEYSIZE;
+        }
+    }
+
+    vector<vector<unsigned char>> blocks;
+    int block_size = best_keysize;
+
+    for (size_t i = 0; i < byte_vector.size(); i += block_size) {
+        
+        int current_block_size = std::min(block_size, static_cast<int>(byte_vector.size() - i));
+        vector<unsigned char> block(byte_vector.begin() + i, byte_vector.begin() + i + current_block_size); 
+        blocks.push_back(block);
+    }
+
+    vector<vector<unsigned char>> transposed_blocks;
+    for (int i = 0; i < block_size; ++i) {
+        vector<unsigned char> transposed_block;
+        for (int j = 0; j < blocks.size(); ++j) {
+            transposed_block.push_back(blocks[j][i]);
+        }
+        transposed_blocks.push_back(transposed_block);
+    }
+
+    cout << transposed_blocks.size() << endl;
+
+    return "output";
 }
 
-int hammingDistance(string text1, string text2)
-{
-    try
-    {
-        if (text1.size() != text2.size())
-        {
-            throw string("as entradas da hammingDistance must be equal");
-        }
-
-        // conta os differing_bits
-        int differing_bits{};
-
-        for (size_t i{}; i < text1.size(); i++)
-        {
-            std::bitset<8> binary_text1_char(text1[i]);
-            std::bitset<8> binary_text2_char(text2[i]);
-
-            std::bitset<8> binary_result = binary_text1_char ^ binary_text2_char;
-
-            for (size_t i{}; i < 8; i++)
-            {
-                if (binary_result[i] == 1)
-                {
-                    differing_bits++;
-                }
-            }
-        }
-
-        return differing_bits;
+vector<unsigned char> convert_base64_file_to_bytes(const std::string& file_path) {
+    // extracting file
+    std::ifstream file(file_path);
+    if (!file.is_open()) {
+        std::cerr << "error: could not open file '" << file_path << "'" << std::endl;
+        return {}; // Return an empty vector on error
     }
-    catch (const string error)
-    {
-        cerr << "error: " << error << endl;
-        return -1;
-    }
-}
 
-string decodeBase64File(string source) {
-    // extracao do texto
-    std::ifstream arquivo(source);
-    string texto64;
-    string linha;
-    while (getline(arquivo, linha))
-    {
-        texto64 += linha;
+    std::string text_64, line;
+    while (std::getline(file, line)) {
+        text_64 += line;
     }
-    arquivo.close();
+    file.close();
 
-    // dicionario
-    static const std::string base64_chars =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    // base64 to bytes
+    static const std::string base64_chars = 
+             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    std::vector<unsigned char> decoded_bytes;
+
     int val = 0, valb = -8;
-
-    vector<unsigned char> decoded_text{};
-
-    for (char c: texto64){
-        if(c == '='){
-            break;
-        }
-        val = (val << 6) + base64_chars.find(c);   
+    for (char c : text_64) {
+        if (c == '=') break; 
+        val = (val << 6) + base64_chars.find(c);
         valb += 6;
-        cout << "char c: " << c << endl;
-        cout << "val: " << val << endl;
-        cout << "val << 6: " << (val << 6) << endl;
-        cout << "val dict: " << base64_chars.find(c) << endl;
-        cout << "valb: " << valb << endl;
-        break;
 
+        if (valb >= 0) {
+            decoded_bytes.push_back((val >> valb) & 0xFF);
+            valb -= 8;
+        }
     }
 
-    return string(decoded_text.begin(), decoded_text.end());
+    return decoded_bytes;
+}
+
+int hamming_distance(const std::vector<unsigned char>& string_byte_1, const std::vector<unsigned char>& string_byte_2) {
+  if (string_byte_1.size() != string_byte_2.size()) {
+      throw std::invalid_argument("Input vectors must have the same length");
+  }
+
+  int distance = 0;
+  auto it1 = string_byte_1.begin();
+  auto it2 = string_byte_2.begin();
+
+  while (it1 != string_byte_1.end()) {
+      unsigned char diff = (*it1) ^ (*it2);
+      for (int i = 0; i < 8; ++i) { 
+          if (diff & (1 << i)) { 
+              distance++;
+          }
+      }
+      ++it1;
+      ++it2;
+  }
+
+  return distance;
+}
+
+vector<unsigned char> string_to_byte_vector(const std::string& str) {
+    std::vector<unsigned char> byte_vector;
+
+    for (char c : str) {
+        byte_vector.push_back(static_cast<unsigned char>(c));
+    }
+
+    return byte_vector;
 }

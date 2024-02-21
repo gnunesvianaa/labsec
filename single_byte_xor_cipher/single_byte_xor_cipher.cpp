@@ -24,7 +24,7 @@ string single_byte_xor_cipher(string encripted_hex)
     vector<int> scores(128, 100);
  
     for (size_t key{}; key < 128; key++) {
-        string text_decripted = text_encripted;
+        string text = text_encripted;
 
         std::map<std::string, int> quantities = {
             {"lowercase", 0}, // abc
@@ -37,7 +37,7 @@ string single_byte_xor_cipher(string encripted_hex)
 
         bool no_printable{false};
 
-        for (char &c : text_decripted) {
+        for (char &c : text) {
             c = static_cast<int>(c) ^ static_cast<int>(key);
 
             int int_c = static_cast<int>(c);
@@ -67,7 +67,7 @@ string single_byte_xor_cipher(string encripted_hex)
         }
 
         // calculating score
-        int length = text_decripted.size();
+        int length = text.size();
         scores[key] += ((static_cast<double>(quantities["space"]) / length) * 100) * 20;    // most important for a sentence
         scores[key] += ((static_cast<double>(quantities["lowercase"]) / length) * 100) * 10;
         scores[key] += ((static_cast<double>(quantities["uppercase"]) / length) * 100) * 2;
@@ -89,3 +89,7 @@ string single_byte_xor_cipher(string encripted_hex)
 
     return text_decripted;
 }
+int find_key(string text) {
+
+}
+

@@ -10,10 +10,12 @@
 #include <iomanip>
 #include <fstream>
 #include <bitset>
+
 using namespace std;
 
-string break_repeating_key_xor();
-int hammingDistance(string text1, string text2);
-string decodeBase64File(string base64);
+string break_repeating_key_xor(string file_path);
+vector<unsigned  char> convert_base64_file_to_bytes(const string& file_path);
+vector<unsigned  char> string_to_byte_vector(const std::string& str);
+int hamming_distance(const std::vector<unsigned char>& string_byte_1, const std::vector<unsigned char>& string_byte_2);
 
 #endif
