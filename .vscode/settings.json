@@ -52,5 +52,6 @@
         "typeinfo": "cpp",
         "cinttypes": "cpp",
         "unordered_set": "cpp"
-    }
+    },
+    "sqltools.connections": []
 }
